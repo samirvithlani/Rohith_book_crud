@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bean.BookBean;
 import com.dao.BookDao;
+import com.util.ValidationUtil;
 
 /**
  * Servlet implementation class BookInsertController
@@ -24,25 +25,78 @@ public class BookInsertController extends HttpServlet {
 
 		String bName = request.getParameter("txtBookName");
 		// if price ot qty is null it will throw and exception
-		int bPrice = Integer.parseInt(request.getParameter("txtBookPrice"));
-		int bQty = Integer.parseInt(request.getParameter("txtBookQty"));
 
-		// to database.. we need to pass these values to DAO using bean class
-		BookBean bookBean = new BookBean();
-		bookBean.setbName(bName);
-		bookBean.setbPrice(bPrice);
-		bookBean.setbQty(bQty);
+		String price = request.getParameter("txtBookPrice");
+		String qty = request.getParameter("txtBookQty");
 
-		BookDao bookDao = new BookDao();
-		boolean flag = bookDao.insertBook(bookBean);
-		if (flag == true) {
+		int bPrice = 0;
+		int bQty = 0;
+		boolean isvalid = false;
+		
+		if (!price.equals("")) {
 
-			response.sendRedirect("booklistcontroller");
+			bPrice = Integer.parseInt(price);
+			
+			if(bPrice >100000) {
+				
+				isvalid  = true;
+				request.setAttribute("bPricegreter", "book price should not greater thn 100000");
+			}
+
 		} else {
 
-			response.sendError(401);
+			isvalid = true;
+			request.setAttribute("bPriceerror", "book price is required..");
+
+		}
+		
+		if (!qty.equals("")) {
+
+			bQty = Integer.parseInt(qty);
+		} else {
+			isvalid = true;
+			request.setAttribute("bQtyerror", "book qty is required...");
 		}
 
+		if (ValidationUtil.isEmpty(bName)) {
+
+			isvalid = true;
+			request.setAttribute("bNameerror", "Book Name is Required..");
+
+		}
+		if (ValidationUtil.isEmpty(Integer.toString(bPrice))) {
+
+			isvalid = true;
+			request.setAttribute("bPriceerror", "book Price is required..");
+		}
+		if (ValidationUtil.isEmpty(Integer.toString(bQty))) {
+
+			isvalid = true;
+			request.setAttribute("bQtyerror", "book Qty is required..");
+		}
+
+		if (isvalid == true) {
+
+			request.getRequestDispatcher("insertBook.jsp").forward(request, response);
+		} else {
+
+			// to database.. we need to pass these values to DAO using bean class
+			BookBean bookBean = new BookBean();
+			bookBean.setbName(bName);
+			bookBean.setbPrice(bPrice);
+			bookBean.setbQty(bQty);
+
+			BookDao bookDao = new BookDao();
+			boolean flag = bookDao.insertBook(bookBean);
+			if (flag == true) {
+
+				response.sendRedirect("booklistcontroller");
+			} else {
+
+				response.sendError(401);
+			}
+
+		}
 	}
 
 }

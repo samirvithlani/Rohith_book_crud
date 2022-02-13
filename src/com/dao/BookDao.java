@@ -151,10 +151,10 @@ public class BookDao {
 				pstmt.setInt(2, bookBean.getbPrice());
 				pstmt.setInt(3, bookBean.getbQty());
 				pstmt.setInt(4, bookBean.getbId());
-				
+
 				int res = pstmt.executeUpdate();
-				if(res>0) {
-					
+				if (res > 0) {
+
 					flag = true;
 				}
 
@@ -167,5 +167,37 @@ public class BookDao {
 		return flag;
 
 	}
+
+	public List<BookBean> searchData(String bName) {
+		List<BookBean> books = new ArrayList<BookBean>();
+
+		Connection conn = DBConnection.getConnection();
+		if (conn != null) {
+
+			String SELECTSQL = "select * from books where bname LIKE ? ";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SELECTSQL);
+				pstmt.setString(1, bName+"%");
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+
+					BookBean bookBean = new BookBean();
+					bookBean.setbId(rs.getInt("bid"));
+					bookBean.setbName(rs.getString("bname"));
+					bookBean.setbPrice(rs.getInt("bprice"));
+					bookBean.setbQty(rs.getInt("bqty"));
+					books.add(bookBean);
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return books;
+	}
+	
 
 }

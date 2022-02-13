@@ -20,7 +20,7 @@
 			<tr>
 				<td>Enter Book Name</td>
 				<td><input type="text" name="txtBookName"
-					value="<%=bookBean.getbName()%>"></td>
+					value="${bookBean.bName }"></td>
 			</tr>
 			<tr>
 				<td>Enter Book PRICE</td>

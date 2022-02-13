@@ -39,10 +39,54 @@
 		<%
 			}
 		%>
-
-
-
-
 	</table>
+	<form action="searchcontroller">
+		<table border="2px">
+			<tr>
+				<td><input type="text" name="txtSearchName"></td>
+				<td><input type="submit" value="SEARCH"></td>
+			</tr>
+
+
+
+			<%
+				List<BookBean> searchBooks = (List<BookBean>) request.getAttribute("searchBooks");
+			if (searchBooks != null) {
+			%>
+			<table border="3">
+				<tr>
+					<th>BOOK ID</th>
+					<th>BOOK NAME</th>
+					<th>BOOK PRICE</th>
+					<th>BOOK QTY</th>
+
+				</tr>
+
+				<%
+					for (int i = 0; i < searchBooks.size(); i++) {
+
+					BookBean bookBean = searchBooks.get(i);
+				%>
+
+				<tr>
+					<td><%=bookBean.getbId()%></td>
+					<td><%=bookBean.getbName()%></td>
+					<td><%=bookBean.getbPrice()%></td>
+					<td><%=bookBean.getbQty()%></td>
+
+				</tr>
+
+				<%
+					}
+				} else {
+
+				}
+				%>
+			</table>
+
+
+
+		</table>
+	</form>
 </body>
 </html>

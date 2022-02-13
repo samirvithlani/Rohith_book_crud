@@ -13,15 +13,23 @@
 		<table border="3">
 			<tr>
 				<td>Enter Book Name</td>
-				<td><input type="text" name="txtBookName"></td>
+				<td><input type="text" name="txtBookName">
+				${bNameerror }
+				
+				</td>
 			</tr>
 			<tr>
 				<td>Enter Book PRICE</td>
-				<td><input type="text" name="txtBookPrice"></td>
+				<td><input type="text" name="txtBookPrice">
+				${bPriceerror }
+				${bPricegreter}
+				</td>
 			</tr>
 			<tr>
 				<td>Enter Book QTY</td>
-				<td><input type="text" name="txtBookQty"></td>
+				<td><input type="text" name="txtBookQty">
+				${bQtyerror }
+				</td>
 			</tr>
 			<tr>
 

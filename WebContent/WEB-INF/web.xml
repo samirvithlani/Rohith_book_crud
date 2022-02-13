@@ -59,4 +59,14 @@
     <servlet-name>BookUpdateController</servlet-name>
     <url-pattern>/bookupdatecontroller</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchController</display-name>
+    <servlet-name>SearchController</servlet-name>
+    <servlet-class>com.controller.SearchController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchController</servlet-name>
+    <url-pattern>/searchcontroller</url-pattern>
+  </servlet-mapping>
 </web-app>
